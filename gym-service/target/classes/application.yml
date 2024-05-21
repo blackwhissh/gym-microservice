@@ -1,0 +1,104 @@
+spring:
+  application:
+    name: gym-service
+  profiles:
+    default: dev
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    username: postgres
+    password: 12345678
+server:
+  port: 8081
+  error:
+    include-message: always
+management:
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  endpoints:
+    enabled-by-default: false
+  info:
+    env:
+      enabled: true
+  endpoint:
+    prometheus:
+      enabled: true
+    info:
+      enabled: true
+    health:
+      enabled: true
+      show-details: always
+      group:
+        check:
+          include:
+            - DB
+            - externalService
+    mappings:
+      enabled: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hibernate
+info:
+  app:
+    name: gym-service
+    description: dev profile
+    version: 1.0.0
+    java:
+      version: 19.0.2
+  build-timestamp: 2024-05-20 18:44:45
+---
+spring:
+  config:
+    activate:
+      on-profile: admin
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hibernate_admin
+info:
+  app:
+    name: gym-service
+    description: admin profile
+    version: 1.0.0
+    java:
+      version: 19.0.2
+  build-timestamp: 2024-05-20 18:44:45
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hibernate_prod
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+info:
+  app:
+    name: gym-service
+    description: Gym Spring Boot App with Security
+    version: 1.0.0
+    java:
+      version: 19.0.2
+  build-timestamp: 2024-05-20 18:44:45
+
+---
+spring:
+  profiles:
+    active: admin
