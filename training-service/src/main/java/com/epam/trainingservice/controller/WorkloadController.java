@@ -5,10 +5,12 @@ import com.epam.trainingservice.dto.TrainerSummaryByMonth;
 import com.epam.trainingservice.service.WorkloadService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/workload")
+@CrossOrigin(origins = "*")
 public class WorkloadController {
     private final WorkloadService workloadService;
 
@@ -17,11 +19,13 @@ public class WorkloadController {
     }
 
     @GetMapping("/{username}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<TrainerSummary> getTrainerSummary(@PathVariable String username){
         return workloadService.getTrainerSummary(username);
     }
 
     @GetMapping("/by-month/{username}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<TrainerSummaryByMonth> getTrainerSummaryByMonthAndYear(
             @PathVariable String username,
             @RequestParam("year") int year,

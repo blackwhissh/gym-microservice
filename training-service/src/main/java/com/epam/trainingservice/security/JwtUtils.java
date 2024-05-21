@@ -11,19 +11,18 @@ import java.security.Key;
 @Component
 public class JwtUtils {
     @Value("${jwt.secret}")
-    private static String SECRET;
+    private String SECRET;
 
-    public static String validateToken(String token) {
+    public  String validateToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key())
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-
     }
 
-    private static Key key() {
+    private Key key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET));
     }
 

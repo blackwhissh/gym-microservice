@@ -8,10 +8,16 @@ spring:
             uri: lb://gym-service
             predicates:
               - Path=/gym/**
+            filters:
+              - StripPrefix=1
+
           - id: training-service
-            uri: lb://gym-service
+            uri: lb://training-service
             predicates:
               - Path=/training/**
+            filters:
+              - StripPrefix=1
+
           - id: authentication-server
             uri: lb://authentication-server
             predicates:
