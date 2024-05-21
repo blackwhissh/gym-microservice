@@ -9,11 +9,13 @@
         <module name="eureka-server" />
         <module name="gym-service" />
         <module name="training-service" />
+        <module name="authentication-server" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="authentication-server" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="gym-service" options="-parameters" />
       <module name="training-service" options="-parameters" />

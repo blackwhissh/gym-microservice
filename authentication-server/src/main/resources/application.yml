@@ -3,7 +3,7 @@ jwt:
     123487321678683219089080989532412321321433242324353445
 spring:
   application:
-    name: gym-service
+    name: authentication-server
   profiles:
     default: dev
   jpa:
@@ -17,35 +17,9 @@ spring:
     username: postgres
     password: 12345678
 server:
-  port: 8081
+  port: 8084
   error:
     include-message: always
-management:
-  prometheus:
-    metrics:
-      export:
-        enabled: true
-  endpoints:
-    enabled-by-default: false
-  info:
-    env:
-      enabled: true
-  endpoint:
-    prometheus:
-      enabled: true
-    info:
-      enabled: true
-    health:
-      enabled: true
-      show-details: always
-      group:
-        check:
-          include:
-            - DB
-            - externalService
-    mappings:
-      enabled: true
-
 eureka:
   client:
     serviceUrl:
@@ -57,14 +31,6 @@ spring:
       on-profile: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/hibernate
-info:
-  app:
-    name: gym-service
-    description: dev profile
-    version: 1.0.0
-    java:
-      version: 19.0.2
-  build-timestamp: 2024-05-21 23:01:55
 ---
 spring:
   config:
@@ -72,14 +38,6 @@ spring:
       on-profile: admin
   datasource:
     url: jdbc:postgresql://localhost:5432/hibernate_admin
-info:
-  app:
-    name: gym-service
-    description: admin profile
-    version: 1.0.0
-    java:
-      version: 19.0.2
-  build-timestamp: 2024-05-21 23:01:55
 ---
 spring:
   config:
@@ -92,15 +50,6 @@ spring:
       ddl-auto: update
     show-sql: false
     open-in-view: false
-info:
-  app:
-    name: gym-service
-    description: Gym Spring Boot App with Security
-    version: 1.0.0
-    java:
-      version: 19.0.2
-  build-timestamp: 2024-05-21 23:01:55
-
 ---
 spring:
   profiles:

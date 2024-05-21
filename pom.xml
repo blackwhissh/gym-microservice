@@ -11,6 +11,7 @@
     <modules>
         <module>gym-service</module>
         <module>training-service</module>
-	    <module>eureka-server</module>
+	<module>eureka-server</module>
+	<module>authentication-server</module>
     </modules>
 </project>

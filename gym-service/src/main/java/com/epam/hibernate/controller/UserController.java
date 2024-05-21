@@ -8,7 +8,6 @@ import com.epam.hibernate.dto.user.UserInfoDTO;
 import com.epam.hibernate.entity.RefreshToken;
 import com.epam.hibernate.entity.User;
 import com.epam.hibernate.exception.RefreshTokenNotFoundException;
-import com.epam.hibernate.feignClient.TrainingServiceClient;
 import com.epam.hibernate.repository.UserRepository;
 import com.epam.hibernate.security.jwt.AuthTokenFilter;
 import com.epam.hibernate.security.jwt.JwtUtils;
@@ -19,7 +18,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.naming.AuthenticationException;
 
 @RestController
-@RequestMapping(value = "/v1/user",  produces = {"application/JSON", "application/XML"})
+@RequestMapping(value = "/v1/user", produces = {"application/JSON", "application/XML"})
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
     private final TokenManager tokenManager;
@@ -62,15 +60,15 @@ public class UserController {
     @Operation(summary = "Change Current User Password", description = "This method changes User's password and returns new password")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINEE', 'ROLE_TRAINER')")
     public ResponseEntity<?> changePassword(@AuthenticationPrincipal String username,
-                                            @RequestBody UserInfoDTO userInfoDTO){
-        return userService.changePassword(username,userInfoDTO);
+                                            @RequestBody UserInfoDTO userInfoDTO) {
+        return userService.changePassword(username, userInfoDTO);
     }
 
     @PatchMapping(value = "/on-off/{username}")
     @LogEntryExit(showArgs = true, showResult = true)
     @Operation(summary = "Activate/Deactivate", description = "This method Activates/Deactivates User")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> onOffTrainee(@PathVariable String username){
+    public ResponseEntity<?> onOffTrainee(@PathVariable String username) {
         return userService.activateDeactivate(username);
     }
 
