@@ -10,6 +10,7 @@
         <module name="gym-service" />
         <module name="training-service" />
         <module name="authentication-server" />
+        <module name="gateway" />
       </profile>
     </annotationProcessing>
   </component>
@@ -17,6 +18,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="authentication-server" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="gym-service" options="-parameters" />
       <module name="training-service" options="-parameters" />
     </option>

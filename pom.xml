@@ -13,5 +13,6 @@
         <module>training-service</module>
 	<module>eureka-server</module>
 	<module>authentication-server</module>
+	<module>gateway</module>
     </modules>
 </project>
