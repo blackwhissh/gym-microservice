@@ -31,7 +31,8 @@ public class WebSecurityConfig {
                 .cors(httpSecurityCorsConfigurer ->
                         httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/v1/register/**", "/actuator/**").permitAll()
+                        auth.requestMatchers("/v1/register/**", "/actuator/**", "/swagger-ui/**",
+                                        "/swagger-ui.html","/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated()
                         );
 

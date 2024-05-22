@@ -1,5 +1,6 @@
 package com.epam.hibernate.exception;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ExceptionResponse response = new ExceptionResponse();
         response.setDateTime(LocalDateTime.now());
         response.setMessage("You have no authority to perform this action");
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+    }
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<Object> handleExpiredJwtException(ExpiredJwtException e) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.setDateTime(LocalDateTime.now());
+        response.setMessage("JWT is expired");
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
     @ExceptionHandler(TrainingNotFoundException.class)
