@@ -1,5 +1,6 @@
 package com.epam.authenticationserver.controller;
 
+import com.epam.authenticationserver.config.LogEntryExit;
 import com.epam.authenticationserver.dto.LoginDTO;
 import com.epam.authenticationserver.dto.RefreshTokenRequest;
 import com.epam.authenticationserver.dto.RefreshTokenResponse;
@@ -43,14 +44,14 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-//    @LogEntryExit(showArgs = true, showResult = true)
+    @LogEntryExit(showArgs = true, showResult = true)
 //    @Operation(summary = "User Login", description = "This method is used to Log In")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO){
         return userService.authenticate(loginDTO);
     }
 
     @PutMapping(value = "/change-password")
-//    @LogEntryExit(showArgs = true, showResult = true)
+    @LogEntryExit(showArgs = true, showResult = true)
 //    @Operation(summary = "Change Current User Password", description = "This method changes User's password and returns new password")
    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINEE', 'ROLE_TRAINER')")
     public ResponseEntity<?> changePassword(@AuthenticationPrincipal String username, @RequestBody UserInfoDTO userInfoDTO) {
@@ -58,7 +59,7 @@ public class UserController {
     }
 
     @PatchMapping(value = "/on-off/{username}")
-//    @LogEntryExit(showArgs = true, showResult = true)
+    @LogEntryExit(showArgs = true, showResult = true)
 //    @Operation(summary = "Activate/Deactivate", description = "This method Activates/Deactivates User")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> onOffTrainee(@PathVariable String username) {
@@ -66,7 +67,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/refresh")
-//    @LogEntryExit(showArgs = true, showResult = true)
+    @LogEntryExit(showArgs = true, showResult = true)
 //    @Operation(summary = "Refresh Token", description = "This method is used to refresh JWT token")
     public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest request, HttpServletRequest httpRequest) {
         String refreshToken = request.getRefreshToken();
@@ -79,7 +80,7 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-//    @LogEntryExit(showArgs = true, showResult = true)
+    @LogEntryExit(showArgs = true, showResult = true)
 //    @Operation(summary = "Log Out", description = "This method is used to Log Out current User")
     public ResponseEntity<?> logoutUser(HttpServletRequest httpRequest) {
         User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()).orElseThrow(EntityNotFoundException::new);

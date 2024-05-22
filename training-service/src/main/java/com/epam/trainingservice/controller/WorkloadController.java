@@ -1,5 +1,6 @@
 package com.epam.trainingservice.controller;
 
+import com.epam.trainingservice.config.LogEntryExit;
 import com.epam.trainingservice.dto.TrainerSummary;
 import com.epam.trainingservice.dto.TrainerSummaryByMonth;
 import com.epam.trainingservice.service.WorkloadService;
@@ -19,12 +20,14 @@ public class WorkloadController {
 
     @GetMapping("/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @LogEntryExit(showArgs = true, showResult = true)
     public ResponseEntity<TrainerSummary> getTrainerSummary(@PathVariable String username) {
         return workloadService.getTrainerSummary(username);
     }
 
     @GetMapping("/by-month/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @LogEntryExit(showArgs = true, showResult = true)
     public ResponseEntity<TrainerSummaryByMonth> getTrainerSummaryByMonthAndYear(
             @PathVariable String username,
             @RequestParam("year") int year,

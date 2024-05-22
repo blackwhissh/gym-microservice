@@ -1,5 +1,6 @@
 package com.epam.trainingservice.controller;
 
+import com.epam.trainingservice.config.LogEntryExit;
 import com.epam.trainingservice.dto.TrainingInfoRequest;
 import com.epam.trainingservice.service.TrainingService;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ public class TrainingController {
     }
 
     @PostMapping("/save")
+    @LogEntryExit(showArgs = true, showResult = true)
     public ResponseEntity<HttpStatus> saveInfo(@RequestBody TrainingInfoRequest request){
         logger.info("I am in training-service");
         return trainingService.saveInfo(request);
