@@ -31,7 +31,7 @@ public class WebSecurityConfig {
                 .cors(httpSecurityCorsConfigurer ->
                         httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/v1/register/**").permitAll()
+                        auth.requestMatchers("/v1/register/**", "/actuator/**").permitAll()
                                 .anyRequest().authenticated()
                         );
 

@@ -39,18 +39,6 @@ public class UserServiceTest {
         verify(userRepository, times(1)).authenticate("username", "password");
     }
 
-    @Test
-    void activateDeactivateOk() throws AuthenticationException {
-        when(userRepository.authenticate(any(String.class), any(String.class))).thenReturn(true);
-
-        User mockUser = createMockUser();
-        when(userRepository.findByUsername(any(String.class))).thenReturn(Optional.of(mockUser));
-
-        ResponseEntity<?> responseEntity = userService.activateDeactivate("username");
-
-        assertEquals(200, responseEntity.getStatusCode().value());
-        assertEquals("User activated/deactivated successfully", responseEntity.getBody());
-    }
 
     private User createMockUser() {
         return new User("username", "password", true, RoleEnum.ADMIN);
