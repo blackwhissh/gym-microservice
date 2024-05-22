@@ -14,6 +14,7 @@ import com.epam.authenticationserver.security.jwt.JwtUtils;
 import com.epam.authenticationserver.security.jwt.RefreshTokenService;
 import com.epam.authenticationserver.security.jwt.TokenManager;
 import com.epam.authenticationserver.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
@@ -45,14 +46,14 @@ public class UserController {
 
     @PostMapping(value = "/login")
     @LogEntryExit(showArgs = true, showResult = true)
-//    @Operation(summary = "User Login", description = "This method is used to Log In")
+    @Operation(summary = "User Login", description = "This method is used to Log In")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO){
         return userService.authenticate(loginDTO);
     }
 
     @PutMapping(value = "/change-password")
     @LogEntryExit(showArgs = true, showResult = true)
-//    @Operation(summary = "Change Current User Password", description = "This method changes User's password and returns new password")
+    @Operation(summary = "Change Current User Password", description = "This method changes User's password and returns new password")
    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINEE', 'ROLE_TRAINER')")
     public ResponseEntity<?> changePassword(@AuthenticationPrincipal String username, @RequestBody UserInfoDTO userInfoDTO) {
         return userService.changePassword(username, userInfoDTO);
@@ -60,7 +61,7 @@ public class UserController {
 
     @PatchMapping(value = "/on-off/{username}")
     @LogEntryExit(showArgs = true, showResult = true)
-//    @Operation(summary = "Activate/Deactivate", description = "This method Activates/Deactivates User")
+    @Operation(summary = "Activate/Deactivate", description = "This method Activates/Deactivates User")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> onOffTrainee(@PathVariable String username) {
         return userService.activateDeactivate(username);
@@ -68,7 +69,7 @@ public class UserController {
 
     @PostMapping(value = "/refresh")
     @LogEntryExit(showArgs = true, showResult = true)
-//    @Operation(summary = "Refresh Token", description = "This method is used to refresh JWT token")
+    @Operation(summary = "Refresh Token", description = "This method is used to refresh JWT token")
     public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest request, HttpServletRequest httpRequest) {
         String refreshToken = request.getRefreshToken();
         String oldActiveToken = authTokenFilter.parseJwt(httpRequest);
@@ -81,7 +82,7 @@ public class UserController {
 
     @PostMapping("/logout")
     @LogEntryExit(showArgs = true, showResult = true)
-//    @Operation(summary = "Log Out", description = "This method is used to Log Out current User")
+    @Operation(summary = "Log Out", description = "This method is used to Log Out current User")
     public ResponseEntity<?> logoutUser(HttpServletRequest httpRequest) {
         User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()).orElseThrow(EntityNotFoundException::new);
         String oldActiveToken = authTokenFilter.parseJwt(httpRequest);
