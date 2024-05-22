@@ -5,6 +5,7 @@ import com.epam.hibernate.dto.AddTrainingRequest;
 import com.epam.hibernate.entity.TrainingType;
 import com.epam.hibernate.feignClient.TrainingServiceClient;
 import com.epam.hibernate.service.TrainingService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,6 +35,7 @@ public class TrainingController {
     @PostMapping(value = "/add")
     @LogEntryExit(showArgs = true, showResult = true)
     @Operation(summary = "Add Training", description = "This method adds new  Training")
+    @CircuitBreaker(name = "addTrainingCircuitBreaker")
     public ResponseEntity<?> addTraining(@RequestBody AddTrainingRequest request) throws NotActiveException {
         addCounter.increment();
         return trainingService.addTraining(request);
@@ -42,6 +44,7 @@ public class TrainingController {
     @DeleteMapping(value = "/delete/{trainingId}")
     @LogEntryExit(showArgs = true, showResult = true)
     @Operation(summary = "Remove Training", description = "This method removes Training")
+    @CircuitBreaker(name = "removeTrainingCircuitBreaker")
     public ResponseEntity<?> removeTraining(@PathVariable Long trainingId){
         return trainingService.removeTraining(trainingId);
     }
@@ -49,6 +52,7 @@ public class TrainingController {
     @GetMapping(value = "/types")
     @LogEntryExit(showArgs = true, showResult = true)
     @Operation(summary = "Get Training Types", description = "This method returns Training Types")
+    @CircuitBreaker(name = "getTrainingTypesCircuitBreaker")
     public ResponseEntity<List<TrainingType>> getTrainingTypes() {
         return trainingService.getTrainingTypes();
     }
