@@ -3,13 +3,11 @@ package com.epam.hibernate.controller;
 import com.epam.hibernate.config.LogEntryExit;
 import com.epam.hibernate.dto.AddTrainingRequest;
 import com.epam.hibernate.entity.TrainingType;
-import com.epam.hibernate.feignClient.TrainingServiceClient;
 import com.epam.hibernate.service.TrainingService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +43,7 @@ public class TrainingController {
     @LogEntryExit(showArgs = true, showResult = true)
     @Operation(summary = "Remove Training", description = "This method removes Training")
     @CircuitBreaker(name = "removeTrainingCircuitBreaker")
-    public ResponseEntity<?> removeTraining(@PathVariable Long trainingId){
+    public ResponseEntity<?> removeTraining(@PathVariable Long trainingId) {
         return trainingService.removeTraining(trainingId);
     }
 
