@@ -35,7 +35,8 @@ public class WebSecurityConfig {
                 .cors(httpSecurityCorsConfigurer ->
                         httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/h2-console/**").permitAll()
+                        auth.requestMatchers("/h2-console/**", "/actuator/**", "/actuator/health/**"
+                                ,"/swagger-ui/**","/swagger-ui.html","/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated()
                         );
 
